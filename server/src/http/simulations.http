@@ -1,0 +1,7 @@
+###
+# Start simulation
+POST http://localhost:3000/simulations/1/start
+
+###
+# Get simulation data
+GET http://localhost:3000/simulations/1

@@ -6,4 +6,6 @@ export interface TeamResult {
 export interface Simulation {
   id: number;
   results: TeamResult[];
+  inProgress: boolean;
+  ticksLeft: number;
 }
