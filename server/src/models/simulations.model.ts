@@ -1,3 +1,4 @@
+import { SIMULATION_DEFAULT_TICKS } from '@/config/simulation.config';
 import { Simulation } from '@/interfaces/simulations.interface';
 
 const simulationsModel: Simulation[] = [
@@ -8,7 +9,7 @@ const simulationsModel: Simulation[] = [
       { team: 'Poland', score: 0 },
     ],
     inProgress: false,
-    ticksLeft: 9,
+    ticksLeft: SIMULATION_DEFAULT_TICKS,
   },
   {
     id: 2,
@@ -17,7 +18,7 @@ const simulationsModel: Simulation[] = [
       { team: 'Mexico', score: 0 },
     ],
     inProgress: false,
-    ticksLeft: 9,
+    ticksLeft: SIMULATION_DEFAULT_TICKS,
   },
   {
     id: 3,
@@ -26,7 +27,7 @@ const simulationsModel: Simulation[] = [
       { team: 'Uruguay', score: 0 },
     ],
     inProgress: false,
-    ticksLeft: 9,
+    ticksLeft: SIMULATION_DEFAULT_TICKS,
   },
 ];
 

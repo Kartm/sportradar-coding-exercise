@@ -1,16 +1,13 @@
-import { CreateSimulationDto } from '@/dtos/simulations.dto';
+import { SIMULATION_DEFAULT_TICKS } from '@/config/simulation.config';
 import { HttpException } from '@/exceptions/HttpException';
 import { Simulation } from '@/interfaces/simulations.interface';
+import JobsManager from '@/managers/simulationJobs.manager';
 import simulationsModel from '@/models/simulations.model';
-import { CronJob } from 'cron';
-
-const SIMULATION_TICK_SECONDS = 10;
-
-const randomIntFromInterval = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+import { clone } from '@/utils/util';
 
 class SimulationsService {
   public simulations = simulationsModel;
-  private jobs = new Map<number, CronJob>();
+  private jobsManager = new JobsManager();
 
   public async findSimulationById(simulationId: number): Promise<Simulation> {
     const findSimulation = this.simulations.find(s => s.id === simulationId);
@@ -27,38 +24,12 @@ class SimulationsService {
   }
 
   public async startSimulationById(simulationId: number): Promise<Simulation> {
-    const findSimulation = this.simulations.find(s => s.id === simulationId);
+    let findSimulation = this.simulations.find(s => s.id === simulationId);
     if (!findSimulation) throw new HttpException(409, "Simulation doesn't exist");
 
-    findSimulation.inProgress = true;
+    findSimulation = await this.updateSimulationById(simulationId, this.resetSimulation(findSimulation));
 
-    if (this.jobs.has(simulationId)) {
-      // reuse existing CRON job. reset
-      findSimulation.ticksLeft = 9;
-      findSimulation.results.forEach(r => {
-        r.score = 0;
-      });
-    } else {
-      const newJob = new CronJob('* * * * * *', () => {
-        if (findSimulation.ticksLeft === 0) {
-          findSimulation.inProgress = false;
-          newJob.stop();
-          return;
-        }
-
-        if (findSimulation.inProgress) {
-          findSimulation.results[randomIntFromInterval(0, findSimulation.results.length - 1)].score++;
-
-          console.log(findSimulation);
-
-          findSimulation.ticksLeft--;
-        }
-      });
-
-      this.jobs.set(simulationId, newJob);
-    }
-
-    const job = this.jobs.get(simulationId);
+    const job = await this.jobsManager.getOrCreateJob(findSimulation);
 
     job.start();
 
@@ -72,6 +43,18 @@ class SimulationsService {
     findSimulation.inProgress = false;
 
     return findSimulation;
+  }
+
+  private resetSimulation(simulation: Simulation) {
+    const newSimulation = clone(simulation);
+
+    newSimulation.inProgress = true;
+    newSimulation.ticksLeft = SIMULATION_DEFAULT_TICKS;
+    newSimulation.results.forEach(r => {
+      r.score = 0;
+    });
+
+    return newSimulation;
   }
 }
 
