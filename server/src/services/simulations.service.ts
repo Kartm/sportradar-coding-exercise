@@ -30,24 +30,33 @@ class SimulationsService {
     const findSimulation = this.simulations.find(s => s.id === simulationId);
     if (!findSimulation) throw new HttpException(409, "Simulation doesn't exist");
 
-    const job = new CronJob('* * * * * *', () => {
-      const simulation: Simulation = JSON.parse(JSON.stringify(this.simulations.find(s => s.id === simulationId)));
+    findSimulation.inProgress = true;
 
-      if (simulation.ticksLeft === 0) {
-        job.stop();
-        return;
-      }
+    if (this.jobs.has(simulationId)) {
+      // reuse existing CRON job. reset
+      findSimulation.ticksLeft = 9;
+      findSimulation.results.forEach(r => {
+        r.score = 0;
+      });
+    } else {
+      const newJob = new CronJob('* * * * * *', () => {
+        if (findSimulation.ticksLeft === 0) {
+          findSimulation.inProgress = false;
+          newJob.stop();
+          return;
+        }
 
-      simulation.results[randomIntFromInterval(0, simulation.results.length - 1)].score++;
+        findSimulation.results[randomIntFromInterval(0, findSimulation.results.length - 1)].score++;
 
-      this.updateSimulationById(simulation.id, simulation);
+        console.log(findSimulation);
 
-      console.log(simulation);
+        findSimulation.ticksLeft--;
+      });
 
-      simulation.ticksLeft--;
-    });
+      this.jobs.set(simulationId, newJob);
+    }
 
-    this.jobs.set(simulationId, job);
+    const job = this.jobs.get(simulationId);
 
     job.start();
 
