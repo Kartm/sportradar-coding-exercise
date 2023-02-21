@@ -50,7 +50,7 @@ class SimulationsService {
 
     newSimulation.inProgress = true;
     newSimulation.ticksLeft = SIMULATION_DEFAULT_TICKS;
-    newSimulation.results.forEach(r => {
+    newSimulation.teamResults.forEach(r => {
       r.score = 0;
     });
 

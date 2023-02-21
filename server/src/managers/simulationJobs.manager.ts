@@ -16,7 +16,7 @@ class SimulationJobsManager {
         }
 
         if (simulation.inProgress) {
-          simulation.results[randomIntFromInterval(0, simulation.results.length - 1)].score++;
+          simulation.teamResults[randomIntFromInterval(0, simulation.teamResults.length - 1)].score++;
 
           console.log(simulation);
 

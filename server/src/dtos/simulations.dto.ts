@@ -1,4 +1,11 @@
-export class CreateSimulationDto {}
+// these models could be more "granular", but I'm leaving them for simplicity sake
+export class CreateTeamResultDto {
+  team: string;
+}
+
+export class CreateSimulationDto {
+  teamResults: CreateTeamResultDto[];
+}
 
 export interface GetTeamResultDto {
   team: string;
@@ -7,5 +14,5 @@ export interface GetTeamResultDto {
 
 export class GetSimulationDto {
   id: number;
-  results: GetTeamResultDto[];
+  teamResults: GetTeamResultDto[];
 }

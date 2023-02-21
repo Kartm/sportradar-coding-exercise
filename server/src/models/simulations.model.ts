@@ -4,7 +4,7 @@ import { Simulation } from '@/interfaces/simulations.interface';
 const simulationsModel: Simulation[] = [
   {
     id: 1,
-    results: [
+    teamResults: [
       { team: 'Germany', score: 0 },
       { team: 'Poland', score: 0 },
     ],
@@ -13,7 +13,7 @@ const simulationsModel: Simulation[] = [
   },
   {
     id: 2,
-    results: [
+    teamResults: [
       { team: 'Brazil', score: 0 },
       { team: 'Mexico', score: 0 },
     ],
@@ -22,7 +22,7 @@ const simulationsModel: Simulation[] = [
   },
   {
     id: 3,
-    results: [
+    teamResults: [
       { team: 'Argentina', score: 0 },
       { team: 'Uruguay', score: 0 },
     ],

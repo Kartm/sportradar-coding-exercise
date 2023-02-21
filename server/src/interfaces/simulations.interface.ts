@@ -5,7 +5,7 @@ export interface TeamResult {
 
 export interface Simulation {
   id: number;
-  results: TeamResult[];
+  teamResults: TeamResult[];
   inProgress: boolean;
   ticksLeft: number;
 }
