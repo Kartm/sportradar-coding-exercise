@@ -14,12 +14,17 @@ class SimulationRoute implements Routes {
   }
 
   private initializeRoutes() {
+    this.router.get(`${this.path}/:id(\\d+)`, this.simulationsController.getSimulationById);
     this.router.post(
       `${this.path}/:id(\\d+)/start`,
       validationMiddleware(CreateSimulationDto, 'body'),
       this.simulationsController.startSimulationById,
     );
-    this.router.get(`${this.path}/:id(\\d+)`, this.simulationsController.getSimulationById);
+    this.router.post(
+      `${this.path}/:id(\\d+)/finish`,
+      validationMiddleware(CreateSimulationDto, 'body'),
+      this.simulationsController.finishSimulationById,
+    );
   }
 }
 

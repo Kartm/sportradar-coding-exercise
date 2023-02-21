@@ -3,5 +3,9 @@
 POST http://localhost:3000/simulations/1/start
 
 ###
+# Finish simulation
+POST http://localhost:3000/simulations/1/finish
+
+###
 # Get simulation data
 GET http://localhost:3000/simulations/1

@@ -46,11 +46,13 @@ class SimulationsService {
           return;
         }
 
-        findSimulation.results[randomIntFromInterval(0, findSimulation.results.length - 1)].score++;
+        if (findSimulation.inProgress) {
+          findSimulation.results[randomIntFromInterval(0, findSimulation.results.length - 1)].score++;
 
-        console.log(findSimulation);
+          console.log(findSimulation);
 
-        findSimulation.ticksLeft--;
+          findSimulation.ticksLeft--;
+        }
       });
 
       this.jobs.set(simulationId, newJob);
@@ -63,17 +65,14 @@ class SimulationsService {
     return findSimulation;
   }
 
-  // public async pauseSimulationById(simulationId: number): Promise<Simulation> {
-  //   const findSimulation = this.simulations.find(s => s.id === simulationId);
-  //   if (!findSimulation) throw new HttpException(409, "Simulation doesn't exist");
-  //   return findSimulation;
-  // }
+  public async finishSimulationById(simulationId: number): Promise<Simulation> {
+    const findSimulation = this.simulations.find(s => s.id === simulationId);
+    if (!findSimulation) throw new HttpException(409, "Simulation doesn't exist");
 
-  // public async stopSimulationById(simulationId: number): Promise<Simulation> {
-  //   const findSimulation = this.simulations.find(s => s.id === simulationId);
-  //   if (!findSimulation) throw new HttpException(409, "Simulation doesn't exist");
-  //   return findSimulation;
-  // }
+    findSimulation.inProgress = false;
+
+    return findSimulation;
+  }
 }
 
 export default SimulationsService;
