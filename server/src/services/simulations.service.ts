@@ -1,14 +1,14 @@
-import {SIMULATION_DEFAULT_TICKS, SIMULATION_DEFAULT_TICK_EVERY_SECONDS} from '@/config/simulation.config';
+import { SIMULATION_DEFAULT_TICKS, SIMULATION_DEFAULT_TICK_EVERY_SECONDS } from '@/config/simulation.config';
 import { CreateSimulationDto, GetSimulationDto } from '@/dtos/simulations.dto';
 import { HttpException } from '@/exceptions/HttpException';
 import { Simulation } from '@/interfaces/simulations.interface';
-import JobsManager from '@/managers/simulationJobs.manager';
+import SimulationJobsManager from '@/managers/simulationJobs.manager';
 import simulationsModel from '@/models/simulations.model';
 import { clone, isEmpty } from '@/utils/util';
 
 class SimulationsService {
   public simulations = simulationsModel;
-  private jobsManager = new JobsManager();
+  private jobsManager = new SimulationJobsManager();
 
   public async createSimulation(simulationData: CreateSimulationDto): Promise<GetSimulationDto> {
     if (isEmpty(simulationData)) throw new HttpException(400, 'simulationData is empty');
