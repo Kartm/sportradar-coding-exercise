@@ -1,14 +1,30 @@
 ###
-# Start simulation
+# Start simulation 1
 POST http://localhost:3000/simulations/1/start
 
 ###
-# Finish simulation
+# Start simulation 2
+POST http://localhost:3000/simulations/2/start
+
+###
+# Start simulation 3
+POST http://localhost:3000/simulations/3/start
+
+###
+# Finish simulation 1
 POST http://localhost:3000/simulations/1/finish
 
 ###
-# Get simulation data
+# Get simulation 1 data
 GET http://localhost:3000/simulations/1
+
+###
+# Get simulation 2 data
+GET http://localhost:3000/simulations/2
+
+###
+# Get simulation 3 data
+GET http://localhost:3000/simulations/3
 
 ###
 # Create simulation
