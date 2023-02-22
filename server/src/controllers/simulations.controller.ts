@@ -6,6 +6,17 @@ import { Simulation } from '@/interfaces/simulations.interface';
 class SimulationsController {
   public simulationsService = new SimulationsService();
 
+  public createSimulation = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const simulationData: CreateSimulationDto = req.body;
+      const createSimulationData: GetSimulationDto = await this.simulationsService.createSimulation(simulationData);
+
+      res.status(201).json({ data: createSimulationData, message: 'created' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public getSimulationById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const simulationId = Number(req.params.id);

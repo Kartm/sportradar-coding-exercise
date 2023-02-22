@@ -1,13 +1,28 @@
 import { SIMULATION_DEFAULT_TICKS } from '@/config/simulation.config';
+import { CreateSimulationDto, GetSimulationDto } from '@/dtos/simulations.dto';
 import { HttpException } from '@/exceptions/HttpException';
 import { Simulation } from '@/interfaces/simulations.interface';
 import JobsManager from '@/managers/simulationJobs.manager';
 import simulationsModel from '@/models/simulations.model';
-import { clone } from '@/utils/util';
+import { clone, isEmpty } from '@/utils/util';
 
 class SimulationsService {
   public simulations = simulationsModel;
   private jobsManager = new JobsManager();
+
+  public async createSimulation(simulationData: CreateSimulationDto): Promise<GetSimulationDto> {
+    if (isEmpty(simulationData)) throw new HttpException(400, 'simulationData is empty');
+
+    const createSimulationData: Simulation = {
+      id: this.simulations.length + 1,
+      teamResults: simulationData.teams.map(team => ({ ...team, score: 0 })),
+      inProgress: false,
+      ticksLeft: SIMULATION_DEFAULT_TICKS,
+    };
+    this.simulations = [...this.simulations, createSimulationData];
+
+    return createSimulationData;
+  }
 
   public async findSimulationById(simulationId: number): Promise<Simulation> {
     const findSimulation = this.simulations.find(s => s.id === simulationId);
