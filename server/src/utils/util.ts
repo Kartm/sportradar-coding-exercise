@@ -17,3 +17,10 @@ export const isEmpty = (value: string | number | object): boolean => {
     return false;
   }
 };
+
+// this probably wouldn't be necessary if I was working on a real database
+export const clone = <T>(a: T): T => {
+  return JSON.parse(JSON.stringify(a));
+};
+
+export const randomIntFromInterval = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
