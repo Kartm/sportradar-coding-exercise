@@ -1,4 +1,4 @@
-import { SIMULATION_DEFAULT_TICKS } from '@/config/simulation.config';
+import {SIMULATION_DEFAULT_TICKS, SIMULATION_DEFAULT_TICK_EVERY_SECONDS} from '@/config/simulation.config';
 import { CreateSimulationDto, GetSimulationDto } from '@/dtos/simulations.dto';
 import { HttpException } from '@/exceptions/HttpException';
 import { Simulation } from '@/interfaces/simulations.interface';
@@ -17,7 +17,8 @@ class SimulationsService {
       id: this.simulations.length + 1,
       teamResults: simulationData.teams.map(team => ({ ...team, score: 0 })),
       inProgress: false,
-      ticksLeft: SIMULATION_DEFAULT_TICKS,
+      ticksLeft: simulationData.ticks || SIMULATION_DEFAULT_TICKS,
+      ticksEverySeconds: simulationData.ticksEverySeconds || SIMULATION_DEFAULT_TICK_EVERY_SECONDS,
     };
     this.simulations = [...this.simulations, createSimulationData];
 

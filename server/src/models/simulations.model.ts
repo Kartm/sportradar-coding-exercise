@@ -1,4 +1,4 @@
-import { SIMULATION_DEFAULT_TICKS } from '@/config/simulation.config';
+import {SIMULATION_DEFAULT_TICK_EVERY_SECONDS, SIMULATION_DEFAULT_TICKS} from '@/config/simulation.config';
 import { Simulation } from '@/interfaces/simulations.interface';
 
 const simulationsModel: Simulation[] = [
@@ -9,6 +9,7 @@ const simulationsModel: Simulation[] = [
       { team: 'Poland', score: 0 },
     ],
     inProgress: false,
+    ticksEverySeconds: SIMULATION_DEFAULT_TICK_EVERY_SECONDS,
     ticksLeft: SIMULATION_DEFAULT_TICKS,
   },
   {
@@ -18,6 +19,7 @@ const simulationsModel: Simulation[] = [
       { team: 'Mexico', score: 0 },
     ],
     inProgress: false,
+    ticksEverySeconds: SIMULATION_DEFAULT_TICK_EVERY_SECONDS,
     ticksLeft: SIMULATION_DEFAULT_TICKS,
   },
   {
@@ -27,6 +29,7 @@ const simulationsModel: Simulation[] = [
       { team: 'Uruguay', score: 0 },
     ],
     inProgress: false,
+    ticksEverySeconds: SIMULATION_DEFAULT_TICK_EVERY_SECONDS,
     ticksLeft: SIMULATION_DEFAULT_TICKS,
   },
 ];

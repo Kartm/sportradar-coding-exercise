@@ -1,4 +1,4 @@
-import { SIMULATION_TICK_EVERY_SECONDS } from '@/config/simulation.config';
+import { SIMULATION_DEFAULT_TICK_EVERY_SECONDS } from '@/config/simulation.config';
 import { Simulation } from '@/interfaces/simulations.interface';
 import { randomIntFromInterval } from '@/utils/util';
 import { CronJob } from 'cron';
@@ -8,7 +8,7 @@ class SimulationJobsManager {
 
   public async getOrCreateJob(simulation: Simulation) {
     if (!this.jobs.has(simulation.id)) {
-      const newJob = new CronJob(`*/${SIMULATION_TICK_EVERY_SECONDS} * * * * *`, () => {
+      const newJob = new CronJob(`*/${SIMULATION_DEFAULT_TICK_EVERY_SECONDS} * * * * *`, () => {
         if (simulation.ticksLeft === 0) {
           simulation.inProgress = false;
           newJob.stop();

@@ -8,4 +8,5 @@ export interface Simulation {
   teamResults: TeamResult[];
   inProgress: boolean;
   ticksLeft: number;
+  ticksEverySeconds: number;
 }

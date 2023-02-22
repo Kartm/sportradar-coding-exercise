@@ -1,4 +1,4 @@
-import { ArrayNotEmpty, IsNotEmpty } from 'class-validator';
+import { ArrayNotEmpty, IsNotEmpty, IsNumber, IsOptional, Max, Min } from 'class-validator';
 
 // these models could be more "granular", but I'm leaving them for simplicity sake
 export class CreateTeamResultDto {
@@ -9,6 +9,16 @@ export class CreateTeamResultDto {
 export class CreateSimulationDto {
   @ArrayNotEmpty()
   teams: CreateTeamResultDto[];
+
+  @IsNumber()
+  @IsOptional()
+  ticks?: number;
+
+  @IsNumber()
+  @IsOptional()
+  @Min(1)
+  @Max(60)
+  ticksEverySeconds?: number;
 }
 
 export interface GetTeamResultDto {
@@ -19,4 +29,6 @@ export interface GetTeamResultDto {
 export class GetSimulationDto {
   id: number;
   teamResults: GetTeamResultDto[];
+  inProgress: boolean;
+  ticksLeft: number;
 }
