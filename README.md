@@ -12,4 +12,4 @@ I had to cut some corners due to lack of time. Please be aware that:
 
 - For better scalability I would consider a scheduler with support for Web Workers like breejs.
 - For real-time communication with front-end I would use WebSockets
-- There could be more tests and they could check some negative cases
+- I know there could be more tests and they should check some negative cases
